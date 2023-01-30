@@ -1,7 +1,12 @@
-#include <HID-Project.h>
-#include <ClickEncoder.h>
-#include <TimerOne.h>
-#include <TimerThree.h>
+/*
+Lightroom Macropad by Adam Iannazzone
+Keyboard matrix code adapted from: https://www.baldengineer.com/arduino-keyboard-matrix-tutorial.html
+*/
+
+#include <HID-Project.h> // https://github.com/NicoHood/HID
+#include <ClickEncoder.h> // https://github.com/0xPIT/encoder/blob/master/ClickEncoder.h
+#include <TimerOne.h> // https://github.com/PaulStoffregen/TimerOne
+#include <TimerThree.h> // https://github.com/PaulStoffregen/TimerThree
 
 // Encoder Definitions
 const int adjustSW = 14;
@@ -20,6 +25,7 @@ const int zoomCLK = A3;
 int zoomLast, zoomVal;
 ClickEncoder *zoomEncoder;
 
+// LED Definitions
 bool fastMode = false;
 const int fastLED = 15;
 
@@ -31,8 +37,11 @@ const int rowCount = sizeof(rows) / sizeof(rows[0]);
 byte cols[] = { 2, 3, 4, 5 };
 const int colCount = sizeof(cols) / sizeof(cols[0]);
 
+// Variables for tracking key state (to prevent duplicate presses)
 byte lastKeyState[colCount][rowCount];
 byte currentKeyState[colCount][rowCount];
+
+// Friendly key descriptions for printing to serial
 String keyCodes[colCount][rowCount] = {
   { "ESC", "Reject", "Adjust Back", "Enter" },
   { "Library", "Unflag", "Adjust Forward", "Left" },
@@ -40,6 +49,7 @@ String keyCodes[colCount][rowCount] = {
   { "Crop", "Redo", "Right", "Up" }
 };
 
+// Timers for each encoder. ClickEncoder takes care of system interrupts
 void adjustTimerIsr() {
   adjustEncoder->service();
 }
@@ -50,9 +60,12 @@ void zoomTimerIsr() {
 
 void setup() {
   Serial.begin(9600);
+
+  // Initialize HID keyboard
   Keyboard.begin();
 
-  adjustEncoder = new ClickEncoder(adjustDT, adjustCLK, adjustSW,4);
+  // Set up ClickEncoders. Each one needs its own timer.
+  adjustEncoder = new ClickEncoder(adjustDT, adjustCLK, adjustSW, 4);
   Timer1.initialize(1000);
   Timer1.attachInterrupt(adjustTimerIsr);
   adjustLast = -1;
@@ -62,16 +75,12 @@ void setup() {
   Timer3.attachInterrupt(zoomTimerIsr);
   zoomLast = -1;
 
-  Serial.println("Powered On!");
+  // Set pinModes for rows and columns
   for (int x = 0; x < rowCount; x++) {
-    // Serial.print(rows[x]);
-    // Serial.println(" as input");
     pinMode(rows[x], INPUT);
   }
 
   for (int x = 0; x < colCount; x++) {
-    // Serial.print(cols[x]);
-    // Serial.println(" as input-pullup");
     pinMode(cols[x], INPUT_PULLUP);
   }
   pinMode(fastLED, OUTPUT);
@@ -134,27 +143,35 @@ void checkZoomEncoder() {
 }
 
 void readMatrix() {
-  // iterate the columns
+  // Iterate through each column
   for (int colIndex = 0; colIndex < colCount; colIndex++) {
-    // col: set to output to low
     byte curCol = cols[colIndex];
     pinMode(curCol, OUTPUT);
     digitalWrite(curCol, LOW);
 
-    // row: interate through the rows
+    // Iterate through each row for this column only
     for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
       byte rowCol = rows[rowIndex];
       pinMode(rowCol, INPUT_PULLUP);
       currentKeyState[colIndex][rowIndex] = digitalRead(rowCol);
+
+      // Check if key is pressed
       if (currentKeyState[colIndex][rowIndex] == LOW) {
+        // Ensure that current key state differs from previous state. This will avoid duplicate presses
+        // Remove this inner if-statement if you want to allow burst mode
         if (keyCodes[colIndex][rowIndex] != "" && lastKeyState[colIndex][rowIndex] == HIGH) {
           executeCommand(colIndex, rowIndex);
         }
       }
+
+      // Update key states
       lastKeyState[colIndex][rowIndex] = currentKeyState[colIndex][rowIndex];
+      
+      // Disable row
       pinMode(rowCol, INPUT);
     }
-    // disable the column
+
+    // Disable column
     pinMode(curCol, INPUT);
   }
 }
@@ -163,7 +180,7 @@ void executeCommand(int col, int row) {
   String thisCode = keyCodes[col][row];
   Serial.println(thisCode);
 
-  // First Column
+  // Go to appropriate function for active column
   switch (col) {
     case 0:
       firstCol(row);
@@ -177,9 +194,15 @@ void executeCommand(int col, int row) {
     case 3:
       fourthCol(row);
       break;
-  }
-}
+  } // switch
+} // executeCommand
 
+/*
+Each function below represents one column in the keyboard matrix.
+You will need to modify the keypresses for each item if you want to alter the macropad.
+NOTE: The rows and columns do NOT directly correspond to they key layout.
+Refer to the diagram at https://github.com/jiannazzone/Lightroom-Macropad for more information.
+*/
 void firstCol(int row) {
   switch (row) {
     case 0:
