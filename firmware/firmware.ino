@@ -43,10 +43,10 @@ byte currentKeyState[colCount][rowCount];
 
 // Friendly key descriptions for printing to serial
 String keyCodes[colCount][rowCount] = {
-  { "ESC", "Reject", "Adjust Back", "Enter" },
-  { "Library", "Unflag", "Adjust Forward", "Left" },
-  { "Develop", "Pick", "Undo", "Down" },
-  { "Crop", "Redo", "Right", "Up" }
+  { "ESC", "Reject", "Adjust Back", "Enter" }, // Keys labeled (x, 1)
+  { "Library", "Unflag", "Adjust Forward", "Left" }, // Keys labeled (x, 2)
+  { "Develop", "Pick", "Undo", "Down" }, // Keys labeled (x, 3)
+  { "Crop", "Redo", "Right", "Up" } // Keys labeled (x, 4)
 };
 
 // Timers for each encoder. ClickEncoder takes care of system interrupts
@@ -183,15 +183,19 @@ void executeCommand(int col, int row) {
   // Go to appropriate function for active column
   switch (col) {
     case 0:
+      // Keys labeled (x, 1)
       firstCol(row);
       break;
     case 1:
+      // Keys labeled (x, 2)
       secondCol(row);
       break;
     case 2:
+      // Keys labeled (x, 3)
       thirdCol(row);
       break;
     case 3:
+      // Keys labeled (x, 4)
       fourthCol(row);
       break;
   } // switch
@@ -204,6 +208,7 @@ NOTE: The rows and columns do NOT directly correspond to they key layout.
 Refer to the diagram at https://github.com/jiannazzone/Lightroom-Macropad for more information.
 */
 void firstCol(int row) {
+  // Keys labeled (x, 1)
   switch (row) {
     case 0:
       Keyboard.write(KEY_ESC);
@@ -221,6 +226,7 @@ void firstCol(int row) {
 }
 
 void secondCol(int row) {
+  // Keys labeled (x, 2)
   switch (row) {
     case 0:
       Keyboard.press(KEY_LEFT_GUI);
@@ -241,6 +247,7 @@ void secondCol(int row) {
 }
 
 void thirdCol(int row) {
+  // Keys labeled (x, 3)
   switch (row) {
     case 0:
       Keyboard.press(KEY_LEFT_GUI);
@@ -264,6 +271,7 @@ void thirdCol(int row) {
 
 void fourthCol(int row) {
   switch (row) {
+    // Keys labeled (x, 4)
     case 0:
       Keyboard.write('r');
       return;
