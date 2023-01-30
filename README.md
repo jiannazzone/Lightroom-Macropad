@@ -3,7 +3,7 @@
 This is an attempt to make a DIY macropad for Adobe Lightroom Classic, focusing on my most-used tools. It should work on any ATMEGA board that supports HID. I used the `ATMEGA32u4` on an Arduino Pro Micro clone. You can find many affordable options on eBay. While the macropad is designed with Lightroom in mind, you can adapt it for any program if you're handy with the Arduino IDE.
 
 ## Materials
-All materials listed will fit in my PCB. If you use different components, I suggest printing out the PCB and verifying that the footprints and pinouts are the same.
+All materials listed will fit in my PCB. If you use different components, I suggest printing out the PCB 1:1 and verifying that the footprints and pinouts are the same.
 - Arduino Pro Micro
 - [PEC16-4220F-S0024 Rotary Encoder](https://www.digikey.com/en/products/detail/bourns-inc/PEC16-4220F-S0024/3534239) (2)
   - Includes a button for toggling Zoom level and slider adjustment speeds
