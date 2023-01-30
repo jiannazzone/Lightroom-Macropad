@@ -20,3 +20,4 @@ All materials listed will fit in my PCB. If you use different components, I sugg
 
 ## Firmware
 The firmware is a standard keyboard matrix (4x4). Because of the layout of the macropad, the ordering is not completely intuitive. The diagram below and included schematics should be helpful in understanding it. The encoder buttons are wired to their own dedicated pins.
+![Key Labeling Diagram](assets/key-label.png)
