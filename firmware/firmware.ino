@@ -270,8 +270,8 @@ void thirdCol(int row) {
 }
 
 void fourthCol(int row) {
+  // Keys labeled (x, 4)
   switch (row) {
-    // Keys labeled (x, 4)
     case 0:
       Keyboard.write('r');
       return;
@@ -287,23 +287,6 @@ void fourthCol(int row) {
       Keyboard.write(KEY_UP_ARROW);
       return;
   }
-}
-
-void printMatrix() {
-  for (int rowIndex = 0; rowIndex < rowCount; rowIndex++) {
-    if (rowIndex < 10)
-      Serial.print(F("0"));
-    Serial.print(rowIndex);
-    Serial.print(F(": "));
-
-    for (int colIndex = 0; colIndex < colCount; colIndex++) {
-      Serial.print(lastKeyState[colIndex][rowIndex]);
-      if (colIndex < colCount)
-        Serial.print(F(", "));
-    }
-    Serial.println("");
-  }
-  Serial.println("");
 }
 
 void loop() {
