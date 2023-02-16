@@ -98,16 +98,13 @@ void checkAdjustEncoder() {
 
   // Encoder Rotation
   adjustVal += adjustEncoder->getValue();
-  if (adjustVal == adjustLast) {
-    return;
-  }
   if (adjustLast > adjustVal) {
     if (fastMode) {
       Keyboard.write('+');
     } else {
       Keyboard.write('=');
     }
-  } else {
+  } else if (adjustLast < adjustVal){
     if (fastMode) {
       Keyboard.write('_');
     } else {
@@ -128,13 +125,10 @@ void checkZoomEncoder() {
 
   // Encoder Rotation
   zoomVal += zoomEncoder->getValue();
-  if (zoomVal == zoomLast) {
-    return;
-  }
-  if (zoomLast > zoomVal) {
+  if (zoomLast < zoomVal) {
     Keyboard.press(KEY_LEFT_GUI);
     Keyboard.write('=');
-  } else {
+  } else if (zoomLast > zoomVal) {
     Keyboard.press(KEY_RIGHT_GUI);
     Keyboard.write('-');
   }
