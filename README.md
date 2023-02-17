@@ -21,7 +21,9 @@ All materials listed will fit in my PCB. If you use different components, I sugg
 ## Firmware
 The [firmware](/firmware/firmware.ino) is a standard keyboard matrix (4x4), but because of the layout of the macropad, the ordering is not completely intuitive. The diagram below and included schematics should be helpful in understanding it. The encoder buttons are wired to their own dedicated pins.
 
-If you plan to customize your macropad, please carefully read my comments in the firmware file. Since columns are actively switched through, each one gets a dedicated function for ease of understanding. You can go into each column function and edit the associated shortcuts. For example:
+![Key Labeling Diagram](assets/key-label.png)
+
+If you plan to customize your macropad, please carefully read my comments in the firmware file. Since columns are actively switched through, each one gets a dedicated function for ease of understanding. You can go into each function and edit the associated shortcuts. For example:
 ```arduino
 void firstCol(int row) {
   // Keys labeled (x, 1)
@@ -47,16 +49,23 @@ Keyboard.press(KEY_LEFT_GUI);
 Keyboard.write('z');
 Keyboard.releaseAll();
 ```
-Note the use of both `Keyboard.press()` and `Keyboard.write()`. The `press` method will hold the key, while the `write` method will only activate the key once. Using `press` for this example would result in multiple `UNDOs`. More information can be found on [NicoHood's repo](https://github.com/NicoHood/HID).
+Note the use of both `Keyboard.press()` and `Keyboard.write()`. The `press` method will hold the key, while the `write` method will only activate the key once. Using `Keyboard.press('z')` for this example would result in multiple `UNDOs`.
 
-![Key Labeling Diagram](assets/key-label.png)
+> More information can be found on [NicoHood's repo](https://github.com/NicoHood/HID).
 
 ## PCB
-The PCB was designed using EasyEDA. I have included their [JSON exports](/PCB/EasyEDA/) for both the schematics and PCB if you want to make changes. You can also find the live project [on EasyEDA](https://oshwlab.com/aiannazzone/lightroom).
+The PCB was designed using [EasyEDA](https://easyeda.com). I have included their [JSON exports](/PCB/EasyEDA/) for both the schematics and PCB if you want to make changes. You can also find the live project [on EasyEDA](https://oshwlab.com/aiannazzone/lightroom).
 ![Schematic](assets/schematic.png)
 ![PCB](assets/pcb.png)
 
-## Enclosure
-Coming soon...
+## Enclosure (Work in Progress)
+The enclosure prints in 2 halves. You will need the following hardware:
+- M3x5 (1)
+- M3x10 (4)
+
+The short screw secures the PCB directly to the bottom half of the enclosure. The mounting holes in the PCB are slightly oversized and allow for a little adjustment if your PCB and print don't perfectly align. The 4 longer screws go through the top half, through the PCB, and into the bottom half of the enclosure.
+
+You will also want two knobs for your rotary encoders. I have [created one](/STLs/Rotary_Knob.stl) that fits nicely on the encoders, but you can use the [parametric OpenSCAD file](/STLs/Rotary_Knob.scad) to customize it however you like.
+
 ___
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
