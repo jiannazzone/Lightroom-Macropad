@@ -98,13 +98,13 @@ void checkAdjustEncoder() {
 
   // Encoder Rotation
   adjustVal += adjustEncoder->getValue();
-  if (adjustLast > adjustVal) {
+  if (adjustLast < adjustVal) {
     if (fastMode) {
       Keyboard.write('+');
     } else {
       Keyboard.write('=');
     }
-  } else if (adjustLast < adjustVal){
+  } else if (adjustLast > adjustVal){
     if (fastMode) {
       Keyboard.write('_');
     } else {
