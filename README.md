@@ -1,4 +1,4 @@
-# Lightroom-Macropad (WORK IN PROGRESS)
+# Lightroom Macropad
 
 This is an attempt to make a DIY macropad for Adobe Lightroom Classic, focusing on my most-used tools. It should work with any ATMEGA board that supports HID. I used the `ATMEGA32u4` on an Arduino Pro Micro clone, and you can find many affordable options on eBay. While the macropad is designed with Lightroom in mind, you can adapt it for any program if you're handy with the Arduino IDE.
 
