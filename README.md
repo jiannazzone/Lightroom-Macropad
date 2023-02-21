@@ -4,12 +4,16 @@ This is an attempt to make a DIY macropad for Adobe Lightroom Classic, focusing 
 
 > [Lightroom keyboard shortcuts](https://helpx.adobe.com/lightroom-classic/help/keyboard-shortcuts.html)
 
+![Angled View](assets/angle-view.jpeg)
+![Top view](assets/top-view.jpeg)
+
 ## Materials
 All materials listed will fit in my PCB. If you use different components, I suggest printing out the PCB 1:1 and verifying that the footprints and pinouts are the same. All components are through-hole.
 - Arduino Pro Micro
 - [PEC16-4220F-S0024 Rotary Encoder](https://www.digikey.com/en/products/detail/bourns-inc/PEC16-4220F-S0024/3534239) (2)
   - Includes a button for toggling Zoom level and slider adjustment speed
   - If you use a different encoder, you might need to adjust the schematic and firmware (details below, also see schematic for rotary pinout)
+  - **These encoders have a long-ish shaft. If I were to do this again, I would get the [same encoder with a 15mm shaft](https://www.digikey.com/en/products/detail/bourns-inc/PEC16-4215F-S0024/3534280?s=N4IgTCBcDaIAoFEDCBGAbAWgCxhQVgDEMBlABlLCxAF0BfIA).**
 - MX-compatible key switches (16)
 - Keycaps of your choosing (16)
   - I used the relegendable keycaps from [Adafruit](https://www.adafruit.com/product/5039) (also available on [DigiKey](https://www.digikey.com/en/products/detail/adafruit-industries-llc/5039/14313478?s=N4IgTCBcDaIEoFMA2CDmCB2ATAhgIxRAF0BfIA))
@@ -61,7 +65,9 @@ The PCB was designed using [EasyEDA](https://easyeda.com). I have included their
 ## Enclosure (Work in Progress)
 The enclosure prints in 2 halves. You will need the following hardware:
 - M3x5 (1)
-- M3x10 (4)
+- M3x16 (4)
+
+The exact lengths aren't that important. You just want them to be long enough for the teeth to grab in the plastic pillars, but not so long that the screws protrude.
 
 The short screw secures the PCB directly to the bottom half of the enclosure. The mounting holes in the PCB are slightly oversized and allow for a little adjustment if your PCB and print don't perfectly align. The 4 longer screws go through the top half, through the PCB, and into the bottom half of the enclosure.
 
